@@ -54,3 +54,8 @@ class OnSearchPage extends PageState {
   @override
   List<Object> get props => [];
 }
+
+class OnInformationPage extends PageState {
+  @override
+  List<Object> get props => [];
+}

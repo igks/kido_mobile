@@ -50,3 +50,8 @@ class ToSearchPage extends PageEvent {
   @override
   List<Object> get props => [];
 }
+
+class ToInformationPage extends PageEvent {
+  @override
+  List<Object> get props => [];
+}

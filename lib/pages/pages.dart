@@ -14,3 +14,4 @@ part 'content-doa.dart';
 part 'favorite-page.dart';
 part 'favorite-detail-page.dart';
 part 'search-page.dart';
+part 'information.dart';

@@ -55,6 +55,17 @@ class _MenuPageState extends State<MenuPage> {
                 color: fontAccent1,
                 size: 30,
               )),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  context.read<PageBloc>().add(ToInformationPage());
+                },
+                icon: Icon(
+                  MdiIcons.informationOutline,
+                  color: fontAccent1,
+                  size: 30,
+                )),
+          ],
         ),
         body: categories.length > 0 && !isLoading
             ? GridView.count(

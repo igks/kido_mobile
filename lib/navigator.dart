@@ -43,6 +43,8 @@ class _AppNavigatorState extends State<AppNavigator> {
         return FavoriteDetailPage(content: state.content);
       } else if (state is OnSearchPage) {
         return SearchPage();
+      } else if (state is OnInformationPage) {
+        return InformationPage();
       } else {
         return SplashPage();
       }

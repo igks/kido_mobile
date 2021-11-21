@@ -115,7 +115,7 @@ class _ContentDoaPageState extends State<ContentDoaPage> {
                                         color: secondaryColor,
                                         child: Text(
                                           content.description!,
-                                          style: TextStyle(fontSize: 11),
+                                          style: TextStyle(fontSize: 12),
                                           textAlign: TextAlign.center,
                                         ),
                                       )
