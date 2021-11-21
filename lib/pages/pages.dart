@@ -15,3 +15,4 @@ part 'favorite-page.dart';
 part 'favorite-detail-page.dart';
 part 'search-page.dart';
 part 'information.dart';
+part 'persiapan-page.dart';

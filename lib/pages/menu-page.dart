@@ -68,40 +68,78 @@ class _MenuPageState extends State<MenuPage> {
           ],
         ),
         body: categories.length > 0 && !isLoading
-            ? GridView.count(
-                crossAxisCount: 2,
-                children: categories
-                    .map((category) => GestureDetector(
+            ? Column(
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 15, right: 15),
+                    child: Card(
+                        color: Colors.amber[200],
+                        child: GestureDetector(
                           onTap: () {
-                            redirectTo(category);
+                            context.read<PageBloc>().add(ToPersiapanPage());
                           },
                           child: Container(
-                              padding: EdgeInsets.all(20),
-                              child: Card(
-                                  color: Colors.amber[200],
-                                  child: Center(
-                                      child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        MdiIcons.bookOpenVariant,
-                                        color: Colors.white,
-                                        size: 40,
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        category.name,
-                                        style: fontPrimary.copyWith(
-                                            color: fontAccent1,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  )))),
-                        ))
-                    .toList())
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 15),
+                            child: Center(
+                                child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Persiapan Sikap",
+                                  style: fontPrimary.copyWith(
+                                      color: fontAccent1,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            )),
+                          ),
+                        )),
+                  ),
+                  Expanded(
+                    child: GridView.count(
+                        crossAxisCount: 2,
+                        children: categories
+                            .map((category) => GestureDetector(
+                                  onTap: () {
+                                    redirectTo(category);
+                                  },
+                                  child: Container(
+                                      padding: EdgeInsets.all(15),
+                                      child: Card(
+                                          color: Colors.amber[200],
+                                          child: Center(
+                                              child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                MdiIcons.bookOpenVariant,
+                                                color: Colors.white,
+                                                size: 40,
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                category.name,
+                                                style: fontPrimary.copyWith(
+                                                    color: fontAccent1,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          )))),
+                                ))
+                            .toList()),
+                  )
+                ],
+              )
             : Container(
                 child: Center(
                   child: Spinner(),

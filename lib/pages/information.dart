@@ -22,7 +22,7 @@ class InformationPage extends StatelessWidget {
                 context.read<PageBloc>().add(ToMenuPage());
               },
               icon: Icon(
-                MdiIcons.heartCircle,
+                MdiIcons.homeCircle,
                 color: fontAccent1,
                 size: 30,
               )),

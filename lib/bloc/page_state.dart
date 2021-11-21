@@ -59,3 +59,8 @@ class OnInformationPage extends PageState {
   @override
   List<Object> get props => [];
 }
+
+class OnPersiapanPage extends PageState {
+  @override
+  List<Object> get props => [];
+}

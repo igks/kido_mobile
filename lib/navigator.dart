@@ -45,6 +45,8 @@ class _AppNavigatorState extends State<AppNavigator> {
         return SearchPage();
       } else if (state is OnInformationPage) {
         return InformationPage();
+      } else if (state is OnPersiapanPage) {
+        return PersiapanPage();
       } else {
         return SplashPage();
       }

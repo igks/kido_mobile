@@ -38,5 +38,9 @@ class PageBloc extends Bloc<PageEvent, PageState> {
     on<ToInformationPage>((event, emit) {
       emit(OnInformationPage());
     });
+
+    on<ToPersiapanPage>((event, emit) {
+      emit(OnPersiapanPage());
+    });
   }
 }

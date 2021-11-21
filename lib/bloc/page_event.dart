@@ -55,3 +55,8 @@ class ToInformationPage extends PageEvent {
   @override
   List<Object> get props => [];
 }
+
+class ToPersiapanPage extends PageEvent {
+  @override
+  List<Object> get props => [];
+}
