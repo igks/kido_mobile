@@ -1,5 +1,5 @@
-name: doa_kidung_flutter
-description: A new Flutter project.
+name: KiDo
+description: Aplikasi buku saku yang berisi doa - doa dan nyanyian - nyanyian suci agama Hindu.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
