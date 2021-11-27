@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.doa_kidung_flutter">
+    package="com.sigkdev.kido">
 
   <uses-permission android:name="android.permission.INTERNET" />
 
