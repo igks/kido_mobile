@@ -1,5 +1,5 @@
+import 'package:KiDo/models/models.dart';
 import 'package:bloc/bloc.dart';
-import 'package:doa_kidung_flutter/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 part 'page_event.dart';

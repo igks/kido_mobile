@@ -64,7 +64,7 @@ class _FavoritePageState extends State<FavoritePage> {
         },
         child: Scaffold(
             appBar: CustomAppBar(
-              title: Text("Favorites"),
+              title: Text("Favorit"),
               leading: IconButton(
                 onPressed: () {
                   context.read<PageBloc>().add(ToMenuPage());
@@ -132,7 +132,7 @@ class _FavoritePageState extends State<FavoritePage> {
                         })
                     : Container(
                         child: Center(
-                          child: Text("Belum ada favorite yang di tambahkan."),
+                          child: Text("Belum ada favorit yang di tambahkan."),
                         ),
                       )
                 : Container(

@@ -14,6 +14,8 @@ class _ContentDoaPageState extends State<ContentDoaPage> {
   List<Model.Content> contents = [];
   bool isLoading = true;
   List<int> favorites = [];
+  late BannerAd ads;
+  bool isAdLoaded = true;
 
   Future<void> loadContent(int titleId) async {
     String url = "$svDomain/contents/$titleId";
@@ -56,6 +58,20 @@ class _ContentDoaPageState extends State<ContentDoaPage> {
     super.initState();
     loadContent(widget.title.id);
     getFavorite();
+
+    ads = BannerAd(
+        size: AdSize.largeBanner,
+        adUnitId: svBannerAdUnitId,
+        listener: BannerAdListener(onAdLoaded: (_) {
+          setState(() {
+            isAdLoaded = true;
+          });
+        }, onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+        }),
+        request: AdRequest());
+
+    ads.load();
   }
 
   @override
@@ -66,104 +82,132 @@ class _ContentDoaPageState extends State<ContentDoaPage> {
           return Future.value(false);
         },
         child: Scaffold(
-          appBar: CustomAppBar(
-            title: Text(widget.title.content),
-            leading: IconButton(
-              onPressed: () {
-                context.read<PageBloc>().add(ToJudulDoaPage(widget.category));
-              },
-              icon: Icon(MdiIcons.chevronLeft),
+            appBar: CustomAppBar(
+              title: Text(widget.title.content),
+              leading: IconButton(
+                onPressed: () {
+                  context.read<PageBloc>().add(ToJudulDoaPage(widget.category));
+                },
+                icon: Icon(MdiIcons.chevronLeft),
+              ),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      context.read<PageBloc>().add(ToFavoritePage());
+                    },
+                    icon: Icon(
+                      MdiIcons.heartCircle,
+                      size: 30,
+                      color: fontAccent1,
+                    )),
+                IconButton(
+                    onPressed: () {
+                      context.read<PageBloc>().add(ToSearchPage());
+                    },
+                    icon: Icon(
+                      MdiIcons.fileFind,
+                      size: 30,
+                      color: fontAccent1,
+                    )),
+              ],
             ),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    context.read<PageBloc>().add(ToFavoritePage());
-                  },
-                  icon: Icon(
-                    MdiIcons.heartCircle,
-                    size: 30,
-                    color: fontAccent1,
-                  )),
-              IconButton(
-                  onPressed: () {
-                    context.read<PageBloc>().add(ToSearchPage());
-                  },
-                  icon: Icon(
-                    MdiIcons.fileFind,
-                    size: 30,
-                    color: fontAccent1,
-                  )),
-            ],
-          ),
-          body: contents.length > 0 && !isLoading
-              ? ListView.builder(
-                  itemCount: contents.length,
-                  itemBuilder: (context, index) {
-                    var content = contents[index];
-                    return Container(
-                      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                      child: Card(
-                        child: Container(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              children: [
-                                content.description != null
-                                    ? Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        padding: EdgeInsets.all(5),
-                                        color: secondaryColor,
-                                        child: Text(
-                                          content.description!,
-                                          style: TextStyle(fontSize: 12),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      )
-                                    : SizedBox(),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  content.mantram,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic),
-                                  textAlign: TextAlign.center,
-                                ),
-                                Divider(),
-                                if (content.meaning != "-")
-                                  Text(
-                                    content.meaning,
-                                    style: fontSecondary.copyWith(fontSize: 16),
-                                    textAlign: TextAlign.center,
+            body: Container(
+              child: Column(
+                children: [
+                  contents.length > 0 && !isLoading
+                      ? Expanded(
+                          child: ListView.builder(
+                              itemCount: contents.length,
+                              itemBuilder: (context, index) {
+                                var content = contents[index];
+                                return Container(
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  child: Card(
+                                    child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          children: [
+                                            content.description != null
+                                                ? Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    padding: EdgeInsets.all(5),
+                                                    color: secondaryColor,
+                                                    child: Text(
+                                                      content.description!,
+                                                      style: TextStyle(
+                                                          fontSize: 12),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  )
+                                                : SizedBox(),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              content.mantram,
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontStyle: FontStyle.italic),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            Divider(),
+                                            if (content.meaning != "-")
+                                              Text(
+                                                content.meaning,
+                                                style: fontSecondary.copyWith(
+                                                    fontSize: 16),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {
+                                                      updateFavorite(
+                                                          content.id);
+                                                    },
+                                                    icon: favorites.contains(
+                                                            content.id)
+                                                        ? Icon(
+                                                            MdiIcons.heart,
+                                                            size: 30,
+                                                            color: fontAccent1,
+                                                          )
+                                                        : Icon(
+                                                            MdiIcons
+                                                                .heartOutline,
+                                                            size: 30,
+                                                            color: fontAccent1))
+                                              ],
+                                            )
+                                          ],
+                                        )),
                                   ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          updateFavorite(content.id);
-                                        },
-                                        icon: favorites.contains(content.id)
-                                            ? Icon(
-                                                MdiIcons.heart,
-                                                size: 30,
-                                                color: fontAccent1,
-                                              )
-                                            : Icon(MdiIcons.heartOutline,
-                                                size: 30, color: fontAccent1))
-                                  ],
-                                )
-                              ],
-                            )),
-                      ),
-                    );
-                  })
-              : Container(
-                  child: Center(
-                  child: Spinner(),
-                )),
-        ));
+                                );
+                              }),
+                        )
+                      : Expanded(
+                          child: Container(
+                              child: Center(
+                            child: Spinner(),
+                          )),
+                        ),
+                  if (isAdLoaded)
+                    Container(
+                      child: AdWidget(ad: ads),
+                      width: ads.size.width.toDouble(),
+                      height: ads.size.height.toDouble(),
+                      alignment: Alignment.center,
+                    )
+                ],
+              ),
+            )));
   }
 }

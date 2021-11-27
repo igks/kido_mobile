@@ -1,9 +1,10 @@
-import 'package:doa_kidung_flutter/bloc/blocs.dart';
-import 'package:doa_kidung_flutter/navigator.dart';
+import 'package:KiDo/bloc/page_bloc.dart';
+import 'package:KiDo/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,6 +13,10 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+
+  Future<InitializationStatus> _initGoogleMobileAds() {
+    return MobileAds.instance.initialize();
+  }
 
   runApp(KidungDoa());
 }

@@ -1,11 +1,13 @@
-import 'package:doa_kidung_flutter/bloc/page_bloc.dart';
-import 'package:doa_kidung_flutter/models/models.dart' as Model;
-import 'package:doa_kidung_flutter/services/services.dart';
-import 'package:doa_kidung_flutter/shared/shared.dart';
-import 'package:doa_kidung_flutter/widgets/widgets.dart';
+import 'package:KiDo/bloc/page_bloc.dart';
+import 'package:KiDo/helpers/helpers.dart';
+import 'package:KiDo/services/services.dart';
+import 'package:KiDo/shared/shared.dart';
+import 'package:KiDo/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/src/provider.dart';
+import 'package:KiDo/models/models.dart' as Model;
 
 part 'menu-page.dart';
 part 'splash-page.dart';

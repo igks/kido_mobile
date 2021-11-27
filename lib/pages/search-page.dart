@@ -117,7 +117,7 @@ class _SearchPageState extends State<SearchPage> {
                                             ])),
                                     child: Row(
                                       children: [
-                                        Icon(MdiIcons.magnifyPlus,
+                                        Icon(MdiIcons.fullscreen,
                                             color: fontAccent1),
                                         SizedBox(
                                           width: 10,
