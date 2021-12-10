@@ -19,7 +19,7 @@ class PersiapanPage extends StatelessWidget {
     {
       "description": "Kara Sudana (Membersihkan tangan)",
       "doa":
-          "Om suddha mam swaha (tangan kanan)\nOm ati suddha mam swaha(tangan kiri)",
+          "Om suddha mam swaha (tangan kanan)\nOm ati suddha mam swaha (tangan kiri)",
       "meaning":
           "Ya Tuhan, bersihkanlah tangan kanan hamba.\nYa Tuhan, bersihkanlah tangan kiri hamba."
     }

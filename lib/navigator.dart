@@ -1,7 +1,7 @@
-import 'package:doa_kidung_flutter/bloc/page_bloc.dart';
+import 'package:KiDo/bloc/page_bloc.dart';
+import 'package:KiDo/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:doa_kidung_flutter/pages/pages.dart';
 
 class AppNavigator extends StatefulWidget {
   const AppNavigator({Key? key}) : super(key: key);

@@ -1,4 +1,4 @@
-package com.example.doa_kidung_flutter
+package com.sigkdev.kido
 
 import io.flutter.embedding.android.FlutterActivity
 

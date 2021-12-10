@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.doa_kidung_flutter">
+    package="com.sigkdev.kido">
 
   <uses-permission android:name="android.permission.INTERNET" />
 
@@ -40,5 +40,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7066467672321241~7620692965"/>
+
     </application>
 </manifest>

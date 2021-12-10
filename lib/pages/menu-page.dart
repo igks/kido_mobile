@@ -10,6 +10,8 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   List<Model.Category> categories = [];
   bool isLoading = true;
+  late BannerAd ads;
+  bool isAdLoaded = true;
 
   Future<void> getCategory() async {
     String url = "$svDomain/categories";
@@ -35,6 +37,20 @@ class _MenuPageState extends State<MenuPage> {
   void initState() {
     super.initState();
     getCategory();
+
+    ads = BannerAd(
+        size: AdSize.largeBanner,
+        adUnitId: svBannerAdUnitId,
+        listener: BannerAdListener(onAdLoaded: (_) {
+          setState(() {
+            isAdLoaded = true;
+          });
+        }, onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+        }),
+        request: AdRequest());
+
+    ads.load();
   }
 
   @override
@@ -137,7 +153,14 @@ class _MenuPageState extends State<MenuPage> {
                                           )))),
                                 ))
                             .toList()),
-                  )
+                  ),
+                  if (isAdLoaded)
+                    Container(
+                      child: AdWidget(ad: ads),
+                      width: ads.size.width.toDouble(),
+                      height: ads.size.height.toDouble(),
+                      alignment: Alignment.center,
+                    )
                 ],
               )
             : Container(
