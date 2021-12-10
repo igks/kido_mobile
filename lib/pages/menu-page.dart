@@ -12,19 +12,39 @@ class _MenuPageState extends State<MenuPage> {
   bool isLoading = true;
   late BannerAd ads;
   bool isAdLoaded = true;
+  bool isError = false;
 
   Future<void> getCategory() async {
-    String url = "$svDomain/categories";
-    var response = await API.get(url);
-    if (response['success']) {
-      List<Model.Category> categoriesList = [];
-      response['data'].forEach((data) {
-        categoriesList.add(Model.Category.fromJson(data));
-      });
+    setState(() {
+      isLoading = true;
+      isError = false;
+    });
+    try {
+      String url = "$svDomain/categories";
+      var response = await API.get(url);
+      if (response['success']) {
+        loadBanner();
+        List<Model.Category> categoriesList = [];
+        response['data'].forEach((data) {
+          categoriesList.add(Model.Category.fromJson(data));
+        });
+        if (mounted)
+          setState(() {
+            categories = categoriesList;
+            isLoading = false;
+          });
+      } else {
+        if (mounted)
+          setState(() {
+            isLoading = false;
+            isError = true;
+          });
+      }
+    } catch (error) {
       if (mounted)
         setState(() {
-          categories = categoriesList;
           isLoading = false;
+          isError = true;
         });
     }
   }
@@ -33,11 +53,7 @@ class _MenuPageState extends State<MenuPage> {
     context.read<PageBloc>().add(ToJudulDoaPage(category));
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getCategory();
-
+  void loadBanner() {
     ads = BannerAd(
         size: AdSize.largeBanner,
         adUnitId: svBannerAdUnitId,
@@ -51,6 +67,12 @@ class _MenuPageState extends State<MenuPage> {
         request: AdRequest());
 
     ads.load();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCategory();
   }
 
   @override
@@ -163,10 +185,29 @@ class _MenuPageState extends State<MenuPage> {
                     )
                 ],
               )
-            : Container(
-                child: Center(
-                  child: Spinner(),
-                ),
-              ));
+            : !isError
+                ? Container(
+                    child: Center(
+                      child: Spinner(),
+                    ),
+                  )
+                : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Terjadi kesalahan jaringan!'),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              getCategory();
+                            },
+                            child: Text("Muat Ulang"),
+                            style:
+                                ElevatedButton.styleFrom(primary: fontAccent1)),
+                      ],
+                    ),
+                  ));
   }
 }
