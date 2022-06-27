@@ -96,6 +96,7 @@ class _JudulDoaPageState extends State<JudulDoaPage> {
                             Model.Title title = titles[index];
                             return GestureDetector(
                               onTap: () {
+                                LastVisit.save(title);
                                 context.read<PageBloc>().add(
                                     ToContentDoaPage(title, widget.category));
                               },

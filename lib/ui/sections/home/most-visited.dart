@@ -26,7 +26,14 @@ class MostVisited extends StatelessWidget {
                   itemBuilder: (BuildContext ctx, int index) {
                     return GestureDetector(
                       onTap: () {
-                        print(mostVisited[index]['id']);
+                        LastVisit.save(Model.Title(
+                            id: mostVisited[index]['id'],
+                            categoryId: 0,
+                            content: mostVisited[index]['name']));
+                        context.read<PageBloc>().add(ToCachedPage({
+                              'id': mostVisited[index]['id'],
+                              'content': mostVisited[index]['name']
+                            }));
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.7,
