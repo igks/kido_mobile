@@ -133,23 +133,52 @@ class _SearchPageState extends State<SearchPage> {
                                               secondaryColor,
                                               Colors.white
                                             ])),
-                                    child: Row(
+                                    child: Column(
                                       children: [
-                                        Icon(MdiIcons.fullscreen,
-                                            color: fontAccent1),
+                                        Row(
+                                          children: [
+                                            Icon(MdiIcons.fullscreen,
+                                                color: fontAccent1),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.7,
+                                              child: Text(
+                                                content.description ??
+                                                    "Tanpa Judul",
+                                                style: TextStyle(
+                                                    color: fontDark,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                         SizedBox(
-                                          width: 10,
+                                          height: 10,
                                         ),
-                                        Flexible(
-                                          child: Text(
-                                            content.description ??
-                                                "Tanpa Judul",
-                                            style: TextStyle(
-                                                color: fontDark,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
+                                        Container(
+                                          padding: EdgeInsets.all(8),
+                                          color: Colors.white,
+                                          child: SizedBox(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: Text(
+                                              "${content.mantram.substring(0, 50)} ....",
+                                              style: TextStyle(
+                                                  color: fontDark,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                        ),
+                                        )
                                       ],
                                     ),
                                   ),
