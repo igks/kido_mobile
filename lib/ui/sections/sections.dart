@@ -1,5 +1,6 @@
 import 'package:KiDo/bloc/page_bloc.dart';
-import 'package:KiDo/models/models.dart';
+import 'package:KiDo/models/models.dart' as Model;
+import 'package:KiDo/services/services.dart';
 import 'package:KiDo/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

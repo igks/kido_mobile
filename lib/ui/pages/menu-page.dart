@@ -10,6 +10,7 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   List<Model.Category> categories = [];
   List<Map<String, dynamic>> mostVisitedState = [];
+  Map<String, dynamic>? lastVisitState;
 
   bool isLoading = true;
   late BannerAd ads;
@@ -34,15 +35,15 @@ class _MenuPageState extends State<MenuPage> {
         List<Map<String, dynamic>> mostVisitedList = [];
         mostVisited['data'].forEach((data) {
           mostVisitedList.add(data);
-          print(data.toString());
         });
 
-        print(mostVisitedList.length);
+        var lastVisited = await LastVisit.read();
 
         if (mounted)
           setState(() {
             categories = categoriesList;
             mostVisitedState = mostVisitedList;
+            lastVisitState = lastVisited;
             isLoading = false;
           });
       } else {
@@ -100,7 +101,8 @@ class _MenuPageState extends State<MenuPage> {
                         MostVisited(
                           mostVisited: mostVisitedState,
                         ),
-                      LastVisited(),
+                      if (lastVisitState != null)
+                        LastVisited(lastVisited: lastVisitState!),
                       SizedBox(
                         height: 20,
                       ),

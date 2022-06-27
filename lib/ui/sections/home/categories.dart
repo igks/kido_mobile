@@ -1,12 +1,12 @@
 part of '../sections.dart';
 
 class HomeCategories extends StatelessWidget {
-  final List<Category> categories;
+  final List<Model.Category> categories;
   const HomeCategories({Key? key, required this.categories}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    void redirectTo(Category category) {
+    void redirectTo(Model.Category category) {
       context.read<PageBloc>().add(ToJudulDoaPage(category));
     }
 
