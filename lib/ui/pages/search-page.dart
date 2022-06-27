@@ -12,6 +12,8 @@ class _SearchPageState extends State<SearchPage> {
   bool isLoading = true;
   bool isSearch = false;
   List<Model.Content> contents = [];
+  late BannerAd ads;
+  bool isAdsLoaded = false;
 
   void search(value) async {
     setState(() {
@@ -33,6 +35,21 @@ class _SearchPageState extends State<SearchPage> {
       isLoading = false;
       isSearch = false;
     });
+  }
+
+  Future<void> loadBanner() async {
+    ads = await Addsense.initBanner(() {
+      setState(() {
+        isAdsLoaded = true;
+      });
+    }, AdSize.banner);
+    ads.load();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadBanner();
   }
 
   @override
@@ -88,6 +105,7 @@ class _SearchPageState extends State<SearchPage> {
                           ),
                         )),
                   )),
+              if (isAdsLoaded) AdsBanner(ads: ads),
               !isLoading
                   ? contents.length > 0
                       ? Expanded(
