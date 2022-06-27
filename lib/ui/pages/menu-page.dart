@@ -9,28 +9,40 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage> {
   List<Model.Category> categories = [];
+  List<Map<String, dynamic>> mostVisitedState = [];
+
   bool isLoading = true;
   late BannerAd ads;
   bool isAdLoaded = false;
   bool isError = false;
 
-  Future<void> getCategory() async {
+  Future<void> getData() async {
     setState(() {
       isLoading = true;
       isError = false;
     });
     try {
-      String url = "$svDomain/categories";
-      var response = await API.get(url);
-      if (response['success']) {
-        loadBanner();
+      loadBanner();
+      var response = await API.get("$svDomain/categories");
+      var mostVisited = await API.get("$svDomain/top");
+      if (response['success'] && mostVisited['success']) {
         List<Model.Category> categoriesList = [];
         response['data'].forEach((data) {
           categoriesList.add(Model.Category.fromJson(data));
         });
+
+        List<Map<String, dynamic>> mostVisitedList = [];
+        mostVisited['data'].forEach((data) {
+          mostVisitedList.add(data);
+          print(data.toString());
+        });
+
+        print(mostVisitedList.length);
+
         if (mounted)
           setState(() {
             categories = categoriesList;
+            mostVisitedState = mostVisitedList;
             isLoading = false;
           });
       } else {
@@ -61,7 +73,7 @@ class _MenuPageState extends State<MenuPage> {
   @override
   void initState() {
     super.initState();
-    getCategory();
+    getData();
   }
 
   @override
@@ -84,25 +96,10 @@ class _MenuPageState extends State<MenuPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       HomeCategories(categories: categories),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10, top: 20, bottom: 10),
-                        child: Text(
-                          "Paling sering dilihat pengguna",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: fontDark),
+                      if (mostVisitedState.length > 0)
+                        MostVisited(
+                          mostVisited: mostVisitedState,
                         ),
-                      ),
-                      MostVisited(),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10, top: 30, bottom: 10),
-                        child: Text(
-                          "Yang terakhir kamu lihat",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: fontDark),
-                        ),
-                      ),
                       LastVisited(),
                       SizedBox(
                         height: 20,
@@ -129,7 +126,7 @@ class _MenuPageState extends State<MenuPage> {
                         ),
                         ElevatedButton(
                             onPressed: () {
-                              getCategory();
+                              getData();
                             },
                             child: Text("Muat Ulang"),
                             style:
