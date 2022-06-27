@@ -37,7 +37,7 @@ class _PersiapanPageState extends State<PersiapanPage> {
       setState(() {
         isAdLoaded = true;
       });
-    }, AdSize.largeBanner);
+    }, AdSize.banner);
     ads.load();
   }
 
