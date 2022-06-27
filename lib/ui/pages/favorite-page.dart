@@ -114,38 +114,77 @@ class _FavoritePageState extends State<FavoritePage> {
                                                   secondaryColor,
                                                   Colors.white
                                                 ])),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        child: Column(
                                           children: [
-                                            Flexible(
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  context.read<PageBloc>().add(
-                                                      ToFavoriteDetailPage(
-                                                          content));
-                                                },
-                                                child: Text(
-                                                  content.description ??
-                                                      "Tanpa Judul",
-                                                  style: TextStyle(
-                                                      color: fontDark,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.7,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      context.read<PageBloc>().add(
+                                                          ToFavoriteDetailPage(
+                                                              content));
+                                                    },
+                                                    child: Text(
+                                                      content.description ??
+                                                          "Tanpa Judul",
+                                                      style: TextStyle(
+                                                          color: fontDark,
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    removeFavorite(content.id);
+                                                  },
+                                                  child: Icon(
+                                                      MdiIcons.deleteAlert,
+                                                      color: fontAccent1),
+                                                )
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                context.read<PageBloc>().add(
+                                                    ToFavoriteDetailPage(
+                                                        content));
+                                              },
+                                              child: Container(
+                                                color: Colors.white,
+                                                padding: EdgeInsets.all(8),
+                                                child: SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  child: Text(
+                                                    "${content.mantram.substring(0, 30)} ....",
+                                                    style: TextStyle(
+                                                        color: fontDark,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                removeFavorite(content.id);
-                                              },
-                                              child: Icon(MdiIcons.deleteAlert,
-                                                  color: fontAccent1),
-                                            )
                                           ],
                                         ),
                                       ),
