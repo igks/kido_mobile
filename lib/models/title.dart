@@ -9,4 +9,6 @@ class Title {
 
   factory Title.fromJson(Map<String, dynamic> json) => Title(
       id: json['id'], categoryId: json['category_id'], content: json['title']);
+
+  Map<String, dynamic> toJson() => {'id': this.id, 'content': this.content};
 }
