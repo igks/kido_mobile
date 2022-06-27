@@ -42,5 +42,9 @@ class PageBloc extends Bloc<PageEvent, PageState> {
     on<ToPersiapanPage>((event, emit) {
       emit(OnPersiapanPage());
     });
+
+    on<ToCachedPage>((event, emit) {
+      emit(OnCachedPage(event.title));
+    });
   }
 }

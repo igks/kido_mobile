@@ -64,3 +64,11 @@ class OnPersiapanPage extends PageState {
   @override
   List<Object> get props => [];
 }
+
+class OnCachedPage extends PageState {
+  final Map<String, dynamic> title;
+  OnCachedPage(this.title);
+
+  @override
+  List<Object> get props => [title];
+}

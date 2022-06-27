@@ -47,6 +47,8 @@ class _AppNavigatorState extends State<AppNavigator> {
         return InformationPage();
       } else if (state is OnPersiapanPage) {
         return PersiapanPage();
+      } else if (state is OnCachedPage) {
+        return CachedPage(title: state.title);
       } else {
         return SplashPage();
       }
