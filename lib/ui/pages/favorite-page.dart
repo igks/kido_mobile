@@ -10,6 +10,8 @@ class FavoritePage extends StatefulWidget {
 class _FavoritePageState extends State<FavoritePage> {
   List<Model.Content> favorites = [];
   bool isLoading = true;
+  late BannerAd ads;
+  bool isAdsLoaded = false;
 
   void loadFavorite() async {
     var cachedFavorite = await Favorite.getCache();
@@ -49,9 +51,19 @@ class _FavoritePageState extends State<FavoritePage> {
     }
   }
 
+  Future<void> loadBanner() async {
+    ads = await Addsense.initBanner(() {
+      setState(() {
+        isAdsLoaded = true;
+      });
+    }, AdSize.banner);
+    ads.load();
+  }
+
   @override
   void initState() {
     super.initState();
+    loadBanner();
     loadFavorite();
   }
 
@@ -77,64 +89,76 @@ class _FavoritePageState extends State<FavoritePage> {
               ),
             ),
             body: !isLoading
-                ? favorites.length > 0
-                    ? ListView.builder(
-                        itemCount: favorites.length,
-                        itemBuilder: (context, index) {
-                          Model.Content content = favorites[index];
-                          return GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 15),
-                              margin: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [secondaryColor, Colors.white])),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        context
-                                            .read<PageBloc>()
-                                            .add(ToFavoriteDetailPage(content));
-                                      },
-                                      child: Text(
-                                        content.description ?? "Tanpa Judul",
-                                        style: TextStyle(
-                                            color: fontDark,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
+                ? Column(
+                    children: [
+                      if (isAdsLoaded) AdsBanner(ads: ads),
+                      Expanded(
+                          child: favorites.length > 0
+                              ? ListView.builder(
+                                  itemCount: favorites.length,
+                                  itemBuilder: (context, index) {
+                                    Model.Content content = favorites[index];
+                                    return GestureDetector(
+                                      onTap: () {},
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 20, horizontal: 15),
+                                        margin: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            gradient: LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  secondaryColor,
+                                                  Colors.white
+                                                ])),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Flexible(
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  context.read<PageBloc>().add(
+                                                      ToFavoriteDetailPage(
+                                                          content));
+                                                },
+                                                child: Text(
+                                                  content.description ??
+                                                      "Tanpa Judul",
+                                                  style: TextStyle(
+                                                      color: fontDark,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                removeFavorite(content.id);
+                                              },
+                                              child: Icon(MdiIcons.deleteAlert,
+                                                  color: fontAccent1),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
+                                    );
+                                  })
+                              : Container(
+                                  child: Center(
+                                    child: Text(
+                                        "Belum ada favorit yang di tambahkan."),
                                   ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      removeFavorite(content.id);
-                                    },
-                                    child: Icon(MdiIcons.deleteAlert,
-                                        color: fontAccent1),
-                                  )
-                                ],
-                              ),
-                            ),
-                          );
-                        })
-                    : Container(
-                        child: Center(
-                          child: Text("Belum ada favorit yang di tambahkan."),
-                        ),
-                      )
+                                ))
+                    ],
+                  )
                 : Container(
                     child: Center(
                       child: Spinner(),
