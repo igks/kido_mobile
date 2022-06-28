@@ -60,3 +60,11 @@ class ToPersiapanPage extends PageEvent {
   @override
   List<Object> get props => [];
 }
+
+class ToCachedPage extends PageEvent {
+  final Map<String, dynamic> title;
+  ToCachedPage(this.title);
+
+  @override
+  List<Object> get props => [title];
+}

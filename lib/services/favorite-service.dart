@@ -30,3 +30,18 @@ class Favorite {
     storage.remove('favorites');
   }
 }
+
+class LastVisit {
+  static Future<void> save(Title title) async {
+    final storage = await SharedPreferences.getInstance();
+    storage.setString('last-visited', jsonEncode(title));
+  }
+
+  static Future<Map<String, dynamic>?> read() async {
+    final storage = await SharedPreferences.getInstance();
+    String? lastVisited = await storage.getString('last-visited');
+    if (lastVisited == null) return null;
+
+    return jsonDecode(lastVisited);
+  }
+}

@@ -1,5 +1,5 @@
 import 'package:KiDo/bloc/page_bloc.dart';
-import 'package:KiDo/pages/pages.dart';
+import 'package:KiDo/ui/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,6 +47,8 @@ class _AppNavigatorState extends State<AppNavigator> {
         return InformationPage();
       } else if (state is OnPersiapanPage) {
         return PersiapanPage();
+      } else if (state is OnCachedPage) {
+        return CachedPage(title: state.title);
       } else {
         return SplashPage();
       }
